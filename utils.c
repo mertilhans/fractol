@@ -1,40 +1,57 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: merilhan <merilhan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/26 16:38:01 by merilhan          #+#    #+#             */
+/*   Updated: 2025/03/26 16:43:58 by merilhan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
-int ft_strcmp(const char *s1, const char *s2)
+
+int	ft_strcmp(const char *s1, const char *s2)
 {
-    while ((*s1 == *s2) && (*s1 != '\0' && *s2 != '\0'))
-    {
-        s1++;
-        s2++;
-    }
-    return (*s1 - *s2);
+	while ((*s1 == *s2) && (*s1 != '\0' && *s2 != '\0'))
+	{
+		s1++;
+		s2++;
+	}
+	return (*s1 - *s2);
 }
-void    ft_putstr(const char *str)
+
+void	ft_putstr(const char *str)
 {
-    while(*str)
-        write(STDOUT_FILENO,str++,1);
+	while (*str)
+		write(STDOUT_FILENO, str++, 1);
 }
+
 int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
 		return (1);
 	return (0);
 }
-int ft_skip(char *str,int *sign)
-{
-    int i;
 
-    i = 0;
-    while(str[i] <= ' ')
-        i++;
-    if(str[i] == '+' || str[i] == '-')
-    {
-        if (str[i] == '-')
-            *sign *= -1;
-        i++;
-    }
-    return(i);
+int	ft_skip(char *str, int *sign)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] <= ' ')
+		i++;
+	if (str[i] == '+' || str[i] == '-')
+	{
+		if (str[i] == '-')
+			*sign *= -1;
+		i++;
+	}
+	return (i);
 }
-double	ft_atod(char *str) 
+
+double	ft_atod(char *str)
 {
 	int		i;
 	double	nb;
