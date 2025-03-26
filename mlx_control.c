@@ -1,15 +1,13 @@
-#include "fractal.h"
+#include "fractol.h"
 void    start_mlx(t_fract *fract)
 {
         fract->mlx = mlx_init();
-        if (!fract)
-            cleanup(fract);
         if (!fract->mlx)
         {
                 ft_putstr("Failed to init");
                 cleanup (fract);
         }
-        fract->win = mlx_new_window(fract->mlx, WIDTH, HEIGHT, "FRACTAL");
+        fract->win = mlx_new_window(fract->mlx, WIDTH, HEIGHT, "FRACTOL");
         if(!fract->win)
         {
                 ft_putstr("Failed to create window");
@@ -21,8 +19,6 @@ void    start_mlx(t_fract *fract)
                 ft_putstr("Failed to create new image");
                 cleanup(fract);
         }
-        fract->img_data = (int*)mlx_get_data_addr(fract->img, &fract->bpp, &fract->size_line, &fract->endian);
-        start_point(fract);
 }
 int cleanup(t_fract *fract)
 {
@@ -35,20 +31,69 @@ int cleanup(t_fract *fract)
         mlx_destroy_display(fract->mlx);
         free(fract->mlx);
     }
-    if (fract)
-        free(fract);
     exit(0);
 }
-int key_hook(int keycode, t_fract *fract)
+int key_hook_mandelbrot(int keycode, t_fract *fract)
+{
+    double zoom_factor = 0.1 / fract->zoom;
+    if (keycode == ESCAPE)  
+        cleanup(fract);
+    if  (keycode == W || keycode == UP)
+    {
+        fract->min_im -= zoom_factor;
+        fract->max_im -= zoom_factor;
+    }
+    if(keycode == S || keycode == DOWN)
+    {
+        fract->max_im += 0.1;
+        fract->min_im += 0.1;
+    }
+    if(keycode == A  || keycode == LEFT)
+    {
+        fract->max_re -= 0.1;
+        fract->min_re -= 0.1;
+    }
+    if(keycode == D || keycode == RIGHT)
+    {
+        fract->max_re += 0.1;
+        fract->min_re += 0.1;
+    }
+    draw_mandelbrot(fract);
+    return 0;
+}
+int key_hook_julia(int keycode, t_fract *fract)
 {
     if (keycode == ESCAPE)  
-        handle_errors("ESC\n",fract);
+        cleanup(fract);
+    if  (keycode == W || keycode == UP)
+    {
+        fract->min_im -= 0.1;
+        fract->max_im -= 0.1;
+    }
+    if(keycode == S || keycode == DOWN)
+    {
+        fract->max_im += 0.1;
+        fract->min_im += 0.1;
+    }
+    if(keycode == A  || keycode == LEFT)
+    {
+        fract->max_re -= 0.1;
+        fract->min_re -= 0.1;
+    }
+    if(keycode == D || keycode == RIGHT)
+    {
+        fract->max_re += 0.1;
+        fract->min_re += 0.1;
+    }
+    draw_julia(fract);
     return 0;
 }
 void start_point(t_fract *fract)
 {
+    fract->img_data = (int*)mlx_get_data_addr(fract->img, &fract->bpp, &fract->size_line, &fract->endian);
     fract->min_re = -2.0;
-    fract->max_re = 1.5;
-    fract->min_im = -1.5;
+    fract->max_re = 2.0;
+    fract->min_im = -1.0;
     fract->max_im = 1.5;
+    fract->bpp = 0;
 }

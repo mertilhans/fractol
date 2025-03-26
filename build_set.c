@@ -1,17 +1,21 @@
-#include "fractal.h"
+#include "fractol.h"
 void    build_mandelbrot(t_fract *fract)
 {
         start_mlx(fract);
+        start_point(fract);
         mlx_mouse_hook(fract->win, zoom, fract);
         draw_mandelbrot(fract);
-        mlx_key_hook(fract->win,key_hook, fract);
-        mlx_hook(fract->win,17, 1L >> 17, cleanup, fract);
+        mlx_key_hook(fract->win,key_hook_mandelbrot, fract);
+        mlx_hook(fract->win,17,0, cleanup, fract);
+        mlx_loop(fract->mlx);
 }
 void    build_julia(t_fract *fract)
 {
         start_mlx(fract);
+        start_point(fract);
         mlx_mouse_hook(fract->win, zoom_julia, fract);
         draw_julia(fract);
-        mlx_key_hook(fract->win,key_hook, fract);
-        mlx_hook(fract->win,17, 1L >> 17, cleanup, fract);
+        mlx_key_hook(fract->win,key_hook_julia, fract);
+        mlx_hook(fract->win,17,0, cleanup, fract);
+        mlx_loop(fract->mlx);
 }

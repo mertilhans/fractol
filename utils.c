@@ -1,7 +1,7 @@
-#include "fractal.h"
+#include "fractol.h"
 int ft_strcmp(const char *s1, const char *s2)
 {
-    while ((*s1 == *s2) && (*s1 != '\0' || *s1 != '\0'))
+    while ((*s1 == *s2) && (*s1 != '\0' && *s2 != '\0'))
     {
         s1++;
         s2++;
@@ -34,7 +34,7 @@ int ft_skip(char *str,int *sign)
     }
     return(i);
 }
-double	ft_atod(char *str,t_fract *fract) 
+double	ft_atod(char *str) 
 {
 	int		i;
 	double	nb;
@@ -46,10 +46,7 @@ double	ft_atod(char *str,t_fract *fract)
 	div = 0.1;
 	i = ft_skip(str, &is_neg);
 	while (str[i] && ft_isdigit(str[i]) && str[i] != '.')
-	{
-		nb = (nb * 10.0) + (str[i] - '0');
-		i++;
-	}
+		nb = (nb * 10.0) + (str[i++] - '0');
 	if (str[i] == '.')
 		i++;
 	while (str[i] && ft_isdigit(str[i]))
@@ -59,6 +56,6 @@ double	ft_atod(char *str,t_fract *fract)
 		i++;
 	}
 	if (str[i] && !ft_isdigit(str[i]))
-		handle_errors("invalid values\n",fract);
+		handle_errors("İnvalied,Error\n");
 	return (nb * is_neg);
 }

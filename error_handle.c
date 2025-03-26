@@ -1,20 +1,9 @@
-#include "fractal.h"
+#include "fractol.h"
 
-void  handle_errors(const char *error_type,t_fract *fract)
+int  handle_errors(const char *error_type)
 {
         if(error_type)
                 ft_putstr(error_type);
-        cleanup(fract);
+        exit(1);
 }
-void	*ft_memset(void *s, int c, size_t len)
-{
-	unsigned char	*ptr;
 
-	ptr = s;
-	while (len > 0)
-	{
-		*(ptr++) = (unsigned char)c;
-		len--;
-	}
-	return (s);
-}
